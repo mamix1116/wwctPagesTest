@@ -22,8 +22,25 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-    <script src="https://api.meetup.com/2/events?&sign=true&photo-host=public&group_urlname=Women-Who-Code-Tokyo&page=5"></script>
-    
+    <script src="https://api.meetup.com/2/events?&sign=true&photo-host=public&group_urlname=Women-Who-Code-Tokyo&page=5"></script>  
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>  
+
+    <style>
+    #circle {
+    	width: 200px;
+    	height: 200px;
+    	background-color: green;
+    	border-radius: 100px;
+    }
+    .square {
+    	width: 300px;
+    	height: 300px;
+    	background-color: red;
+    	margin-top: 10px;
+    }
+
+    </style>
 
 </head>
 <body>
@@ -34,26 +51,49 @@
 	<div id ="meetup-area">
 	</div>
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-	<script>
-		$.ajax({
-			type: "GET",
-			url:"http://api.meetup.com/2/events.xml?key=7701c7557336473a66502749117751&sign=true&photo-host=public&group_urlname=Women-Who-Code-Tokyo&page=2",
-			dataType: "xml",
-			success: processXML
-		});
+	<h1>Asyncronous Javascript And XML</h1>
 
-		function processXML(xml) {
-			$(xml).find("name").each(function() {
-				if ($(this).find("status").text() =="upcoming" ) {
-					alert($(this).find("name").text());
-				}
-			})
-		}
+	<script>
+
+		$("#circle").click(function() {
+			$(this).animate({
+				width: "300px",
+				height: "300px",
+				borderRadius: "150px",
+				marginLeft: "100px",
+				marginTop: "100px"
+				}, 800);
+		});
 
 
 
 	</script>
+
+
+
+
+
+	<script>
+		$.ajax({
+			type: 'GET',
+			url: 'http://api.meetup.com/2/events.xml?key=7701c7557336473a66502749117751&sign=true&photo-host=public&group_urlname=Women-Who-Code-Tokyo&page=2',
+			dataType: 'xml',
+			success: processXML
+			}
+		});
+
+		function processXML(xml) {
+			alert("yeahhhh!!!");
+			// $(xml).find("item").each(function() {
+			// 	if ($(this).find("status").text() =="upcoming" ) {
+			// 		alert($(this).find("name").text());
+			// 	}
+			// });
+		}
+
+	</script>
+
+
 
 </body>
 </html>
