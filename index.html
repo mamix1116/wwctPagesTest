@@ -25,88 +25,60 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-    <script src="https://api.meetup.com/2/events?&sign=true&photo-host=public&group_urlname=Women-Who-Code-Tokyo&page=5"></script> 
-
-    <script>
-  $(function() {
-
-    var key = $('#apikey');
-    var target = $('#results');
-    var entry = $('#state');
-
-    //document.getElementById('apikey').value = getAPIcookie();
-
-$('#exe').click(function() {
-
-    
-
-    target.empty();
-    $.getJSON(appendQuery(entry.val(), key.val()), function(data) {
-      if (data.status && data.status.match(/^200/) == null) {
-        alert(data.status + ": " + data.details);
-      } else {
-	
-	checkAddCookie(key.val(),document.f.yn[0].checked);
-        $.each(data.results, function(i, ev) {
-
-		output = ev.city + " - " + ev.members + " Members" + "<br>";
-	  target.append(output);
-        });
-      }
-    });
-
-    key.value = 'test';
-});
 
 
-  });
-
-function appendQuery(state) {
-	return "http://api.meetup.com/cities.json/?state=" + state + "&key=" + "7701c7557336473a66502749117751" + "&callback=?";
-}
-
-
-</script> 
+  
 </head>
 <body>
 	<h1>My Work at Women Who Code Tokyo</h1>
 	<p>my works!</p>
 	<div id="map-canvas"></div>
 
-
-	<script type="text/javascript" src="http://api.meetup.com/2/events.xml?key=7701c7557336473a66502749117751&sign=true&photo-host=public&group_urlname=Women-Who-Code-Tokyo&page=2"></script>
 	
-	<script type="text/javascript">
+	<script>
 	    $(document).ready(function(){ 
-			$.getJSON("http://api.meetup.com/2/open_events.json?zip=10001&radius=7&topic=technology&status=upcoming&key=7701c7557336473a66502749117751&callback=?", function (data) { 
+			$.getJSON(appendQuery(), function (data) { 
+
+			var dateAndTime = ""; 
 			var htmlString = ""; 
+			var w = ["Sun","Mon","Tue","Wed","Thr","Fri","Sat"];
 			$.each(data.results, function (i, item) {
-			 htmlString += '<h3><a href="' + item.event_url + '" target="_blank">' + item.name + '</a></h3>' + item.time + item.group.name; }); 
-			$('#upcoming').html(htmlString);
+				var d = new Date(item.time);
+				var endtime = new Date(item.time + item.duration);
+				dateAndTime = d.getFullYear() + '-' + date_format( d.getMonth() + 1 ) + '-' + 
+				       date_format( d.getDate() )+ ' ' + w[d.getDay()] + ' ' + date_format( d.getHours() ) + ':' +
+				       date_format( d.getMinutes() ) + '〜' + date_format(endtime.getHours()) + ':' + 
+				       date_format( endtime.getMinutes() );
+
+				htmlString += dateAndTime + ' ' + '<span><a href="' + item.event_url + '" target="_blank">' + item.name + '</a></span>' + "<br>";
+			}); 
+			$('#meetup-events').html(htmlString);
+
 			}); 
 		});
-    </script>
+		function appendQuery() {
+			return "http://api.meetup.com/2/events.json/?state=" + "&group_urlname=Women-Who-Code-Tokyo" + "&key=" + "7701c7557336473a66502749117751" + "&callback=?";
+		}
+
+		var date_format = function(num) {
+		    return ( num < 10 ) ? '0' + num  : num;
+		};
+
 
 		
-<!--     <div id="upcoming"></div> -->
 
-<p>
-	Enter your API key:
-	<input type="text" id="apikey" size="30"></input>
-	&nbsp 
-	<form name="f">
-	Remember Me? &nbsp	
-	<input type="radio" name="yn" value="yes" checked> Yes
-	<input type="radio" name="yn" value="no" > No
-	</form>
-	<br>
-	Enter the initials of the state to search:
-	<input type="text" id="state" size="3"></input>
-	<br>
-	<input type="submit" value="Submit" id="exe"></input>
-	</p>
-	<hr>
-	<p><div id="results"></div></p>
+		
+
+
+    </script>
+
+
+<h2>Upcoming Meetup</h2>
+<div id="meetup-events"></div>
+<div id="meetup-time"></div>
+
+
+	
 
 
 
