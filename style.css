@@ -8,3 +8,30 @@ body {
 	width: 70% ;
 	margin: auto;
 }
+nav{
+	background-color: #99E1DC;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+nav ul li {
+	float: left;
+	width: 120px;
+	margin: 0;
+	padding: 0;
+}
+nav a {
+	text-align: center;
+	color: #ccc;
+	padding: 0.5em 0;
+	width: 100%;
+}
+nav a:hover {
+	background: #99E1DC;
+	color: white;
+}
